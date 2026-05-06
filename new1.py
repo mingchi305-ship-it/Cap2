@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 # 1. 頁面設定
 st.set_page_config(page_title="Capsir 穩定監控版", layout="wide")
-st.title("📊 Capsir 股票策略看板 (FinMind 穩定版)")
+st.title("📊 Capsir  (FinMind 穩定版)")
 
 # 2. 側邊欄
 with st.sidebar:
