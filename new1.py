@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 # 1. 頁面設定與標題
 st.set_page_config(page_title="Capsir 策略看板", layout="wide")
-st.title("📊 Capsir 股票策略看板（工程師優化版）")
+st.title("📊 Capsir +350W capacity（Improve version）")
 
 # 2. 側邊欄：讓你的策略可以動態調整 (不需要改程式碼)
 with st.sidebar:
@@ -74,7 +74,7 @@ def color_status(val):
 
 st.subheader("📋 即時監控清單")
 st.dataframe(
-    df.style.applymap(color_status, subset=['目前狀態判斷'])
+    df.style.map(color_status, subset=['目前狀態判斷'])
     .format({
         "現價": "{:.2f}", "MA20": "{:.2f}", "52週高點": "{:.2f}",
         "支撐下限": "{:.2f}", "獲利績效": "{:.2%}", "K線乖離率": "{:.2%}"
