@@ -73,14 +73,29 @@ def color_status(val):
     return f'background-color: {color}; color: white'
 
 st.subheader("📋 即時監控清單")
+
+# 8. 視覺化顯示 (優化後的顯示邏輯，防止 None 導致當機)
+def color_status(val):
+    color = 'white'
+    if '🚨' in val: color = '#FF4B4B'
+    elif '🚀' in val: color = '#28A745'
+    elif '🔥' in val: color = '#FFA500'
+    return f'background-color: {color}; color: white'
+
+st.subheader("📋 即時監控清單")
+
+# 先建立一個格式化字典，只有數值不是 None 的才套用
+# 這樣可以避免 TypeError
+format_dict = {}
+for col in ["現價", "MA20", "52週高點", "支撐下限"]:
+    format_dict[col] = lambda x: f"{x:.2f}" if pd.notnull(x) else "-"
+
+for col in ["獲利績效", "K線乖離率"]:
+    format_dict[col] = lambda x: f"{x:.2%}" if pd.notnull(x) else "-"
+
 st.dataframe(
     df.style.map(color_status, subset=['目前狀態判斷'])
-    .format({
-        "現價": "{:.2f}", "MA20": "{:.2f}", "52週高點": "{:.2f}",
-        "支撐下限": "{:.2f}", "獲利績效": "{:.2%}", "K線乖離率": "{:.2%}"
-    }),
+    .format(format_dict),
     use_container_width=True,
     height=400
 )
-
-st.caption(f"最後更新時間：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
